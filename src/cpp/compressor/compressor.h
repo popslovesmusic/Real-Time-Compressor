@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
-#include <string> // Required for std::string
+#include <string>
+#include <deque>
 
 /**
  * @file compressor.h
@@ -26,31 +27,33 @@ struct DebugSample {
 /**
  * @class Compressor
  * @brief A stateful audio compressor that applies gain reduction based on a set of parameters.
+ * @see FPSEE_ANALYSIS.md for a detailed analysis of this module against the F.P.S.E.E. framework.
  */
 class Compressor {
 public:
     Compressor();
 
-    /**
-     * @brief Processes an audio buffer, applying compression in-place.
-     * @param buffer A vector of floating-point audio samples. This buffer is modified directly.
-     */
 #ifdef _DEBUG
-    void process_audio(std::vector<float>& buffer, std::vector<DebugSample>& debug_data);
+    void process_audio(std::vector<float>& buffer, std::vector<DebugSample>& debug_data, float sample_rate);
 #else
-    void process_audio(std::vector<float>& buffer);
+    void process_audio(std::vector<float>& buffer, float sample_rate);
 #endif
 
     void set_threshold(float threshold);
     void set_ratio(float ratio);
-    void set_attack(float attack);
-    void set_release(float release);
+    void set_attack(float attack_ms);
+    void set_release(float release_ms);
+    void set_lookahead(float lookahead_ms);
 
 private:
     float threshold;
     float ratio;
     float attack_time;
     float release_time;
+    float lookahead_time_ms;
+
     float gain;
     float envelope;
+    std::deque<float> lookahead_buffer;
+    std::deque<float> gain_buffer;      ///< Buffer to delay the gain values.
 };

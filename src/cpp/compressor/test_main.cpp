@@ -8,23 +8,35 @@ int main() {
     // 1. Create an instance of our Compressor
     Compressor compressor;
 
-    // 2. Set parameters
-    compressor.set_threshold(0.5f);
-    compressor.set_ratio(4.0f);
-    compressor.set_release(0.2f); // Adjusted for a more illustrative release state
+    // 2. Define test parameters
+    float sample_rate = 1000.0f; // Using a simple sample rate for easy math
+    float threshold = 0.5f;
+    float ratio = 4.0f;
+    float release = 0.5f;
+    float lookahead_ms = 2.0f; // Set a 2ms lookahead
 
-    // 3. Create a sample audio buffer
-    std::vector<float> audio_buffer = { 0.1f, 0.2f, 0.8f, 0.4f };
-    std::cout << "Input Buffer: 0.1 0.2 0.8 0.4" << std::endl;
-    std::cout << "Threshold: 0.5, Ratio: 4.0, Release: 0.2" << std::endl << std::endl;
+    // 3. Configure the compressor
+    compressor.set_threshold(threshold);
+    compressor.set_ratio(ratio);
+    compressor.set_release(release);
+    compressor.set_lookahead(lookahead_ms);
 
-    // 4. Create a vector to hold our debug data
+    // 4. Create a sharp transient signal to test the lookahead
+    std::vector<float> audio_buffer = { 0.0f, 0.0f, 0.9f, 0.0f, 0.0f, 0.0f };
+
+    // Print info
+    std::cout << "--- Lookahead Test ---" << std::endl;
+    std::cout << "Sample Rate: " << sample_rate << " Hz" << std::endl;
+    std::cout << "Lookahead: " << lookahead_ms << " ms" << std::endl;
+    std::cout << "Threshold: " << threshold << ", Ratio: " << ratio << std::endl << std::endl;
+
+    // 5. Create a vector to hold our debug data
     std::vector<DebugSample> debug_results;
 
-    // 5. Process the audio
-    compressor.process_audio(audio_buffer, debug_results);
+    // 6. Process the audio
+    compressor.process_audio(audio_buffer, debug_results, sample_rate);
 
-    // 6. Print the results in a formatted table
+    // 7. Print the results in a formatted table
     std::cout << std::left
               << std::setw(10) << "Sample"
               << std::setw(10) << "Input"
