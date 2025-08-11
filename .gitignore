@@ -1,0 +1,10 @@
+# Doxygen generated documentation
+docs/
+
+# Visual Studio / C++ build artifacts
+*.obj
+*.lib
+*.dll
+*.exp
+*.ilk
+*.pdb
