@@ -8,3 +8,6 @@ docs/
 *.exp
 *.ilk
 *.pdb
+
+# Project-specific test assets
+assets/

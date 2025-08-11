@@ -1,0 +1,31 @@
+# Doxyfile Configuration
+
+# The name of the project
+PROJECT_NAME           = "Hybrid Audio Compressor Engine"
+
+# The directory where the documentation will be generated.
+# We'll use a folder named "docs".
+OUTPUT_DIRECTORY       = docs
+
+# The directory where the source code is located.
+# "." means the current directory.
+INPUT                  = .
+
+# Look for source files in subdirectories as well.
+RECURSIVE              = YES
+
+# Specify the file patterns to look for.
+FILE_PATTERNS          = *.h *.cpp
+
+# We only want HTML output for now.
+GENERATE_LATEX         = NO
+
+# Extract documentation for all members, even if not explicitly documented.
+EXTRACT_ALL            = YES
+
+# Include private members of classes in the documentation.
+EXTRACT_PRIVATE        = YES
+
+# Use the Graphviz 'dot' tool to generate diagrams (optional but recommended).
+HAVE_DOT               = YES
+UML_LOOK               = YES
